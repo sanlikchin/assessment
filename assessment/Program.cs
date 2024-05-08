@@ -7,7 +7,7 @@ internal class Program
 
 
     //global variable
-    static List<string> categories = new List<string>()
+   readonly static List<string> CATEGORIES = new List<string>()
             {
                 "Laptop","desktop","others(such as smartphone or drones)"
             };
@@ -21,7 +21,7 @@ internal class Program
     static float totalvalueforsinurancecounter = 0;
    
     //method and function
-    //check proceed function
+    //check proceed function if user press <enter> the program will look or when the user press"x" the program stop and display summary
     static string CheckProceed()
     {
         while (true)
@@ -41,8 +41,8 @@ internal class Program
         }
        
     }
-    //checnkname method
-    static string checkname()
+    //checnkname method: Check the user name and capitalise it error if user enter invalid data
+    static string CheckName()
     {
 
         while (true)
@@ -61,14 +61,7 @@ internal class Program
         }
 
     }
-    //menu choice method
-    static string MenuChoice(string menuType, List<string> listData)
-    {
-        string menu = GenerateMenu(menuType, listData);
-
-        return listData[CheckInt(menu, 1, listData.Count) - 1];
-    }
-    //check int method
+    //check int method: chceck user integer when entered check if the integer is invalid
     static int CheckInt(string question, int min, int max)
     {
         while (true)
@@ -92,7 +85,7 @@ internal class Program
             }
         }
     }
-    //checkfloat method
+    //checkfloat method: chceck float the user enter check if flaot is invalid
     static float CheckFloat(string question, float min, float max)
     {
         while (true)
@@ -116,7 +109,7 @@ internal class Program
             }
         }
     }
-    //generatemenu method
+    //generatemenu method: loop the menu for the user to eneter again 
     static string GenerateMenu(string menuType, List<string> listData)
     {
         string menu = $"select the {menuType}:\n";
@@ -126,7 +119,7 @@ internal class Program
         }
         return menu;
     }
-    //displayer error message 
+    //displayer error message when user enter invalid data
     private static void DisplayErrorMessage(string Error)
     {
         Console.ForegroundColor = ConsoleColor.Red;
@@ -135,16 +128,16 @@ internal class Program
 
     }
 
-   //calculate device insurnace 
-    static void deviceinsurance()
+   //calculate device insurnace for when the user enter data 
+    static void DeviceInsurance()
     {
         string deviceName;
         int numberofdevices, category;
         float deviceCost;
 
-        deviceName = checkname();
+        deviceName = CheckName();
         
-        category = CheckInt(GenerateMenu("category", categories), 1, 3);
+        category = CheckInt(GenerateMenu("category", CATEGORIES), 1, 3);
 
         deviceCost = CheckFloat("Enter the device cost;\n",0, 100000000);
 
@@ -177,14 +170,14 @@ internal class Program
             depreciation = depreciation * 0.95f;
             Console.WriteLine($"{month + 1}\t{depreciation}");
         }
-        // most expensive device
+        // calculate the most expensive device 
         if (deviceCost > topexpensivedevice)
         {
             topexpensivedevice = deviceCost;
             topdevice = deviceName;
 
         }
-         //categorizing device category 
+         //count device category to each category they belong to 
        if (category.Equals (1))
         {
             LaptopCounter += numberofdevices;
@@ -207,36 +200,6 @@ internal class Program
     }
 
    
-
-    // checkfloat method
-
-    static float Checkfloat(string question, float min, float max)
-    {
-        while (true)
-        {
-            try
-            {
-
-                Console.WriteLine(question);
-
-                float userfloat = (float)Convert.ToDecimal(Console.ReadLine());
-
-                if (userfloat >= min && userfloat <= max)
-                {
-                    return userfloat;
-                }
-                DisplayErrorMessage($"ERROR: you must eneter an number between{min} and{max}");
-            }
-            catch
-            {
-                DisplayErrorMessage($"ERROR: you must eneter an number between{min} and{max}");
-            }
-
-        }
-
-
-        
-    }
     //main process or when run
     //device display title
     static void Main(string[] args)
@@ -254,11 +217,11 @@ internal class Program
         string proceed = "";
         while (proceed.Equals(""))
         {
-            deviceinsurance();
+            DeviceInsurance();
 
             proceed = CheckProceed();
         }
-        // device summary when user press "x"
+        //display device summary when user press "x" to exit 
         Console.WriteLine($"number of laptop is {LaptopCounter}"  );
         Console.WriteLine($"number of desktop is {DesktopCounter}");
         Console.WriteLine($"number of others is {othersCounter}");
