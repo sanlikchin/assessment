@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.CodeDom.Compiler;
+using System.ComponentModel;
 using System.Security.Cryptography.X509Certificates;
 
 internal class Program
@@ -18,10 +19,9 @@ internal class Program
     static float topexpensivedevice;
 
     static float totalvalueforsinurancecounter = 0;
-
    
     //method and function
-
+    //check proceed function
     static string CheckProceed()
     {
         while (true)
@@ -36,11 +36,12 @@ internal class Program
                 
                 return checkProceed;
             }
-            
-            DisplayErrorMessage("error invalid");
+
+            DisplayErrorMessage(checkProceed);
         }
        
     }
+    //checnkname method
     static string checkname()
     {
 
@@ -60,12 +61,14 @@ internal class Program
         }
 
     }
+    //menu choice method
     static string MenuChoice(string menuType, List<string> listData)
     {
         string menu = GenerateMenu(menuType, listData);
 
         return listData[CheckInt(menu, 1, listData.Count) - 1];
     }
+    //check int method
     static int CheckInt(string question, int min, int max)
     {
         while (true)
@@ -89,6 +92,7 @@ internal class Program
             }
         }
     }
+    //checkfloat method
     static float CheckFloat(string question, float min, float max)
     {
         while (true)
@@ -112,6 +116,7 @@ internal class Program
             }
         }
     }
+    //generatemenu method
     static string GenerateMenu(string menuType, List<string> listData)
     {
         string menu = $"select the {menuType}:\n";
@@ -121,6 +126,7 @@ internal class Program
         }
         return menu;
     }
+    //displayer error message 
     private static void DisplayErrorMessage(string Error)
     {
         Console.ForegroundColor = ConsoleColor.Red;
@@ -129,7 +135,7 @@ internal class Program
 
     }
 
-   
+   //calculate device insurnace 
     static void deviceinsurance()
     {
         string deviceName;
@@ -171,14 +177,14 @@ internal class Program
             depreciation = depreciation * 0.95f;
             Console.WriteLine($"{month + 1}\t{depreciation}");
         }
-
+        // most expensive device
         if (deviceCost > topexpensivedevice)
         {
             topexpensivedevice = deviceCost;
             topdevice = deviceName;
 
         }
-         
+         //categorizing device category 
        if (category.Equals (1))
         {
             LaptopCounter += numberofdevices;
@@ -202,7 +208,7 @@ internal class Program
 
    
 
-    // Define other methods and classes here
+    // checkfloat method
 
     static float Checkfloat(string question, float min, float max)
     {
@@ -232,6 +238,7 @@ internal class Program
         
     }
     //main process or when run
+    //device display title
     static void Main(string[] args)
     {
         Console.WriteLine(
@@ -251,7 +258,7 @@ internal class Program
 
             proceed = CheckProceed();
         }
-
+        // device summary when user press "x"
         Console.WriteLine($"number of laptop is {LaptopCounter}"  );
         Console.WriteLine($"number of desktop is {DesktopCounter}");
         Console.WriteLine($"number of others is {othersCounter}");
@@ -260,7 +267,7 @@ internal class Program
 
         Console.WriteLine($"Total value for insurance  ${totalvalueforsinurancecounter}");
 
-        
+    
 
     }
 
